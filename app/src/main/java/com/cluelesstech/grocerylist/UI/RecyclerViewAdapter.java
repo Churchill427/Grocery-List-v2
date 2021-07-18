@@ -2,6 +2,8 @@ package com.cluelesstech.grocerylist.UI;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cluelesstech.grocerylist.Activities.DetailActivity;
 import com.cluelesstech.grocerylist.Database.DatabaseHandler;
 import com.cluelesstech.grocerylist.Model.Grocery;
 import com.cluelesstech.grocerylist.R;
@@ -78,7 +81,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Clicked", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "Clicked", Toast.LENGTH_LONG).show();
+                    int position = getAdapterPosition();
+                    Grocery grocery = groceryList.get(position);
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("id", grocery.getId());
+                    intent.putExtra("name", grocery.getName());
+                    intent.putExtra("quantity", grocery.getQty());
+                    intent.putExtra("date", grocery.getDateAdded());
+
+                    context.startActivity(intent);
+
                 }
             });
         }
